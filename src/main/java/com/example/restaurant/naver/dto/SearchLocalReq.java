@@ -11,7 +11,6 @@ import org.springframework.util.MultiValueMap;
 @AllArgsConstructor
 public class SearchLocalReq {
 
-
     private String query = "";
 
     private int display = 1;
@@ -28,6 +27,5 @@ public class SearchLocalReq {
         map.add("start", String.valueOf(start));
         map.add("sort",sort);
         return map;
-
     }
 }
