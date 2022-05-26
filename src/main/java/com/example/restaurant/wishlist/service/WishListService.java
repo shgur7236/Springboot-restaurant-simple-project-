@@ -4,15 +4,20 @@ import com.example.restaurant.naver.NaverClient;
 import com.example.restaurant.naver.dto.SearchImageReq;
 import com.example.restaurant.naver.dto.SearchLocalReq;
 import com.example.restaurant.wishlist.dto.WishListDto;
+import com.example.restaurant.wishlist.entity.WishListEntity;
+import com.example.restaurant.wishlist.repository.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 public class WishListService {
 
     private final NaverClient naverClient;
-
+    private final WishListRepository wishListRepository;
     public WishListDto search(String query){
 
         //지역 검색
@@ -48,4 +53,46 @@ public class WishListService {
 
     }
 
+    public WishListDto add(WishListDto wishListDto) {
+        var entity = dtoToEntity(wishListDto);
+        var saveEntity = wishListRepository.save(entity);
+        return entityToDto(saveEntity);
+    }
+
+    private WishListEntity dtoToEntity(WishListDto wishListDto){
+        var entity = new WishListEntity();
+        entity.setIndex(wishListDto.getIndex());
+        entity.setTitle(wishListDto.getTitle());
+        entity.setCategory(wishListDto.getCategory());
+        entity.setAddress(wishListDto.getAddress());
+        entity.setRoadAddress(wishListDto.getRoadAddress());
+        entity.setHomepageLink(wishListDto.getHomepageLink());
+        entity.setVisit(wishListDto.isVisit());
+        entity.setVisitCount(wishListDto.getVisitCount());
+        entity.setImageLink(wishListDto.getImageLink());
+        entity.setLastVisitDate(wishListDto.getLastVisitDate());
+        return entity;
+    }
+
+    private WishListDto entityToDto(WishListEntity wishListEntity){
+        var dto = new WishListDto();
+        dto.setIndex(wishListEntity.getIndex());
+        dto.setTitle(wishListEntity.getTitle());
+        dto.setCategory(wishListEntity.getCategory());
+        dto.setAddress(wishListEntity.getAddress());
+        dto.setRoadAddress(wishListEntity.getRoadAddress());
+        dto.setHomepageLink(wishListEntity.getHomepageLink());
+        dto.setVisit(wishListEntity.isVisit());
+        dto.setVisitCount(wishListEntity.getVisitCount());
+        dto.setImageLink(wishListEntity.getImageLink());
+        dto.setLastVisitDate(wishListEntity.getLastVisitDate());
+        return dto;
+    }
+
+    public List<WishListDto> findAll() {
+        return wishListRepository.listAll()
+                .stream()
+                .map(it -> entityToDto(it))
+                .collect(Collectors.toList());
+    }
 }

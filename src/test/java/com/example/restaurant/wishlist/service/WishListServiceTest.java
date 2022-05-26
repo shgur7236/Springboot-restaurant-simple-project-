@@ -18,4 +18,6 @@ public class WishListServiceTest {
         Assertions.assertNotNull(result);
 
     }
+
+
 }
