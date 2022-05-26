@@ -12,8 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.lang.reflect.ParameterizedType;
-
 @Component
 public class NaverClient {
 
@@ -29,7 +27,7 @@ public class NaverClient {
     @Value("${naver.url.search.img}") // application.yaml파일에 가서 naver.client.search.local 값을 가져온다
     private String naverImageSearchUrl;
 
-    public SearchLocalRes localSearch(SearchLocalReq searchLocalReq){
+    public SearchLocalRes searchLocal(SearchLocalReq searchLocalReq){
         // 주소 만들기
         var uri = UriComponentsBuilder.fromUriString(naverLocalSearchUrl)
                 .queryParams(searchLocalReq.toMultiValueMap())
@@ -57,7 +55,7 @@ public class NaverClient {
         return responseEntity.getBody();
     }
 
-    public void imageSearch(){
+    public void searchImage(){
 
     }
 
