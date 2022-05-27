@@ -17,7 +17,7 @@ public class WishListRepositorytest {
         wishList.setTitle("title");
         wishList.setCategory("category");
         wishList.setAddress("address");
-        wishList.setReadAddress("readaddress");
+        wishList.setRoadAddress("roadaddress");
         wishList.setImageLink("");
         wishList.setHomepageLink("");
         wishList.setVisit(false);
